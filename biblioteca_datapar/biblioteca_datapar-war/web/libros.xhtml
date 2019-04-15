@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./WEB-INF/biblioteca_template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        
+        <h:form id="form">
+            
+            <p:fieldset legend="Registrar Libros">
+                <p:growl autoUpdate="messages"/>
+                <p:panelGrid columns="2">
+                    <h:outputLabel value="Autor" for="autor" />
+                    <p:selectOneMenu id="idAutores" value="#{librosBean.autores.idAutores}" >
+                        <f:selectItem itemLabel="Seleccione un Autor" itemValue="" />
+                        <f:selectItems value="#{librosBean.autoreses}" var="a" itemLabel="#{a.nombres}" itemValue="#{a.idAutores}" />
+                    </p:selectOneMenu>
+                    
+                    <h:outputLabel value="Titulo" for="titulo" />
+                    <p:inputText id="titulo" value="#{librosBean.libros.titulo}" required="true" />
+                    
+                    <h:outputLabel value="Editorial" for="editorial" />
+                    <p:inputText id="editorial" value="#{librosBean.libros.editorial}" required="true"/>
+                    
+                </p:panelGrid>
+                <p:commandButton value="Guardar" icon="ui-icon-disk" action="#{librosBean.guardar()}" update=":form :formData"/>
+                <h:inputHidden id="idLibros" value="#{librosBean.libros.idLibros}" />
+            </p:fieldset>
+            
+            
+        </h:form>
+        
+        
+        <h:form id="formData">
+            
+            <p:fieldset legend="Lista de Libros">
+                
+                <p:dataTable value="#{librosBean.libroses}" var="l" >
+                
+                    <p:column headerText="ID" >
+                        <h:outputText value="#{l.idLibros}" />
+                    </p:column>
+                    
+                    <p:column headerText="Autor" >
+                        <h:outputText value="#{l.idAutores.nombres}" />
+                    </p:column>
+                    
+                    <p:column headerText="Titulo" >
+                        <h:outputText value="#{l.titulo}" />
+                    </p:column>
+                    
+                    <p:column headerText="Editorial" >
+                        <h:outputText value="#{l.editorial}" />
+                    </p:column>
+                    
+                    <p:column>
+                        <p:commandButton value="Editar" icon="ui-icon-pencil" action="#{librosBean.setLibros(l)}" update=":form" />
+                        <p:commandButton value="Eliminar" icon="ui-icon-close" action="#{librosBean.eliminar(l)}" update=":formData" />
+                    </p:column>
+                
+                
+                
+                
+                </p:dataTable>
+                
+            </p:fieldset>
+            
+            
+            
+        </h:form>
+        
+        
+        
+        
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./WEB-INF/biblioteca_template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        
+        <h:form id="form">
+            
+            <p:fieldset legend="Registrar un Autor">
+                
+                <p:growl autoUpdate="messages"/>
+                <p:panelGrid columns="2">
+                    
+                    <h:outputLabel value="Nombres" for="nombres" />
+                    <p:inputText id="nombres" value="#{autoresBean.autores.nombres}" />
+                    
+                    <h:outputLabel value="Apellidos" for="apellidos" />
+                    <p:inputText id="apellidos" value="#{autoresBean.autores.apellidos}" />
+                    
+                </p:panelGrid>
+                
+                <p:commandButton value="Guardar" icon="ui-icon-disk" action="#{autoresBean.guardar()}" update=":form :formData"/>
+                <h:inputHidden id="idAutores" value="#{autoresBean.autores.idAutores}"/>
+            </p:fieldset>
+            
+        </h:form>
+        
+        <h:form id="formData">
+            
+            <p:fieldset legend="Lista de Autores">
+                
+                <p:dataTable value="#{autoresBean.autoreses}" var="a" >
+                    <p:column headerText="ID">
+                        <h:outputText value="#{a.idAutores}"/>
+                    </p:column>
+                    
+                    <p:column headerText="Nombres">
+                        <h:outputText value="#{a.nombres}"/>
+                    </p:column>
+                    
+                    <p:column headerText="Apellidos">
+                        <h:outputText value="#{a.apellidos}"/>
+                    </p:column>
+                    
+                    <p:column>
+                        <p:commandButton value="Editar" icon="ui-icon-pencil" action="#{autoresBean.setAutores(a)}" update=":form"/>
+                        <p:commandButton value="Eliminar" icon="ui-icon-close" action="#{autoresBean.eliminar(a)}" update=":formData"/>
+                    </p:column>
+                    
+                    
+                </p:dataTable>
+                
+            </p:fieldset>
+            
+            
+        </h:form>
+        
+    </ui:define>
+
+</ui:composition>
